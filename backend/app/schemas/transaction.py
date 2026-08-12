@@ -24,3 +24,9 @@ class PaginatedTransactions(BaseModel):
     page_size: int
     total: int
     total_pages: int
+
+
+class TransactionMetadataResponse(BaseModel):
+    categories: list[str]
+    statuses: list[str]
+    payment_methods: list[str]
