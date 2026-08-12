@@ -9,7 +9,11 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Transaction
-from app.schemas.transaction import PaginatedTransactions, TransactionResponse
+from app.schemas.transaction import (
+    PaginatedTransactions,
+    TransactionMetadataResponse,
+    TransactionResponse,
+)
 
 
 router = APIRouter(prefix="/api/transactions", tags=["transactions"])
@@ -18,6 +22,37 @@ KOLKATA_TZ = ZoneInfo("Asia/Kolkata")
 SortBy = Literal["date", "amount"]
 SortOrder = Literal["asc", "desc"]
 TransactionStatus = Literal["SUCCESS", "FAILED", "PENDING"]
+
+
+@router.get("/metadata", response_model=TransactionMetadataResponse)
+def get_transaction_metadata(
+    db: Session = Depends(get_db),
+) -> TransactionMetadataResponse:
+    """Return distinct, sorted database values for transaction filters."""
+    categories = db.scalars(
+        select(Transaction.category)
+        .where(Transaction.category.is_not(None))
+        .distinct()
+        .order_by(Transaction.category)
+    ).all()
+    statuses = db.scalars(
+        select(Transaction.status)
+        .where(Transaction.status.is_not(None))
+        .distinct()
+        .order_by(Transaction.status)
+    ).all()
+    payment_methods = db.scalars(
+        select(Transaction.payment_method)
+        .where(Transaction.payment_method.is_not(None))
+        .distinct()
+        .order_by(Transaction.payment_method)
+    ).all()
+
+    return TransactionMetadataResponse(
+        categories=categories,
+        statuses=statuses,
+        payment_methods=payment_methods,
+    )
 
 
 @router.get("", response_model=PaginatedTransactions)

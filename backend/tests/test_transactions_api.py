@@ -17,6 +17,22 @@ def get(path: str = "/api/transactions") -> dict:
     return response.json()
 
 
+def test_transaction_metadata() -> None:
+    payload = get("/api/transactions/metadata")
+
+    assert set(payload) == {"categories", "statuses", "payment_methods"}
+    for values in payload.values():
+        assert all(isinstance(value, str) for value in values)
+        assert values == sorted(values)
+        assert len(values) == len(set(values))
+
+    assert "Uncategorized" in payload["categories"]
+    assert {"SUCCESS", "FAILED", "PENDING"}.issubset(payload["statuses"])
+    assert {"Credit Card", "Debit Card", "Netbanking", "UPI"}.issubset(
+        payload["payment_methods"]
+    )
+
+
 def test_default_listing_and_pagination() -> None:
     payload = get()
     assert payload["page"] == 1
