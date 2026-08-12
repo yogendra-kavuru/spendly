@@ -1,3 +1,9 @@
+const MONTH_VALUE_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+export function isValidMonthValue(value: string): boolean {
+  return MONTH_VALUE_PATTERN.test(value);
+}
+
 export function formatCurrency(value: string | number): string {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -27,11 +33,29 @@ export function formatMonthLabel(month: string): string {
     timeZone: "UTC",
   }).format(new Date(Date.UTC(year, monthNumber - 1, 1)));
 }
-export function isValidMonthValue(value: string): boolean {
-  return MONTH_VALUE_PATTERN.test(value);
-}
-const MONTH_VALUE_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 
 export function formatNumber(value: number): string {
   return new Intl.NumberFormat("en-IN").format(value);
+}
+
+export function getMonthDateRange(month: string): { from: string; to: string } | null {
+  if (!isValidMonthValue(month)) {
+    return null;
+  }
+
+  const [year, monthNumber] = month.split("-").map(Number);
+  const lastDay = new Date(Date.UTC(year, monthNumber, 0)).getUTCDate();
+  return {
+    from: `${month}-01`,
+    to: `${month}-${String(lastDay).padStart(2, "0")}`,
+  };
+}
+
+export function formatTransactionDate(timestamp: string): string {
+  return new Intl.DateTimeFormat("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "Asia/Kolkata",
+  }).format(new Date(timestamp));
 }
