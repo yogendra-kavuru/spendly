@@ -1,13 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { CalendarDays, Coins, ReceiptText } from "lucide-react";
+import { CalendarDays, Coins } from "lucide-react";
 import { useState } from "react";
 
 import { getRewardBalance, getTransactions } from "@/lib/api";
 import { formatMonthLabel, formatNumber, isValidMonthValue } from "@/lib/format";
 import { SpendingByCategory } from "@/components/analytics/spending-by-category";
 import { RewardsCatalog } from "@/components/rewards/rewards-catalog";
+import { TransactionSection } from "@/components/transactions/transaction-section";
 import styles from "./dashboard-shell.module.css";
 
 function monthFromTransactionTimestamp(timestamp: string): string {
@@ -17,6 +18,7 @@ function monthFromTransactionTimestamp(timestamp: string): string {
 export function DashboardShell() {
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
   const [monthInputValue, setMonthInputValue] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const balanceQuery = useQuery({
     queryKey: ["reward-balance"],
     queryFn: getRewardBalance,
@@ -120,7 +122,7 @@ export function DashboardShell() {
         </section>
 
         <section className={styles.overviewGrid} aria-label="Dashboard overview">
-          <SpendingByCategory selectedMonth={analyticsMonth} />
+          <SpendingByCategory selectedMonth={analyticsMonth} onCategorySelect={setSelectedCategory} />
           <RewardsCatalog
             balance={balanceQuery.data?.balance}
             isBalanceLoading={balanceQuery.isPending}
@@ -128,16 +130,12 @@ export function DashboardShell() {
           />
         </section>
 
-        <section className={styles.transactionsPlaceholder} aria-labelledby="transactions-heading">
-          <div className={styles.sectionHeading}>
-            <div>
-              <p className={styles.eyebrow}>Activity</p>
-              <h2 id="transactions-heading">Transactions</h2>
-            </div>
-            <ReceiptText size={22} aria-hidden="true" />
-          </div>
-          <p>Transaction table coming next.</p>
-        </section>
+        <TransactionSection
+          key={analyticsMonth ?? "no-month"}
+          selectedMonth={analyticsMonth}
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
       </main>
     </div>
   );
