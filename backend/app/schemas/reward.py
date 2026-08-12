@@ -21,3 +21,11 @@ class RewardResponse(BaseModel):
 
 class RewardListResponse(BaseModel):
     items: list[RewardResponse]
+
+
+class RewardRedemptionResponse(BaseModel):
+    redemption_id: int
+    reward_id: int
+    reward_name: str
+    coins_spent: int
+    balance: int
