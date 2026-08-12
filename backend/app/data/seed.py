@@ -20,6 +20,7 @@ from app.models import Redemption, Reward, RewardWallet, Transaction, User
 
 
 DEMO_USER_NAME = "Demo User"
+DEMO_INITIAL_WALLET_BALANCE = 1500
 COIN_DIVISOR = Decimal("100")
 MAX_COINS_PER_TRANSACTION = 100
 DEFAULT_SOURCE_PATH = Path(__file__).resolve().parents[2] / "data" / "transactions.json"
@@ -80,6 +81,7 @@ class SeedSummary:
     transactions_inserted: int
     rewards_inserted: int
     wallet_balance: int
+    historical_eligible_coins: int
     transactions_earning_coins: int
     uncategorized_transaction_count: int
     report: DataQualityReport
@@ -170,7 +172,7 @@ def seed_database(source_path: Path | None = None) -> SeedSummary:
         calculate_transaction_coins(transaction.status, transaction.amount)
         for transaction in transactions
     ]
-    wallet_balance = sum(transaction_coins)
+    historical_eligible_coins = sum(transaction_coins)
     transactions_earning_coins = sum(coins > 0 for coins in transaction_coins)
     uncategorized_count = sum(
         transaction.category == "Uncategorized" for transaction in transactions
@@ -190,14 +192,18 @@ def seed_database(source_path: Path | None = None) -> SeedSummary:
 
         session.execute(insert(Transaction), _transaction_mappings(transactions, demo_user.id))
         session.execute(insert(Reward), list(REWARD_CATALOG))
-        session.add(RewardWallet(user_id=demo_user.id, balance=wallet_balance))
+        # The file contains historical activity; use a controlled available balance
+        # so both successful and insufficient-balance redemption demos are possible.
+        session.add(
+            RewardWallet(user_id=demo_user.id, balance=DEMO_INITIAL_WALLET_BALANCE)
+        )
         session.flush()
 
         _validate_seed(
             session,
             demo_user_id=demo_user.id,
             source_record_count=report.normalized_records,
-            expected_wallet_balance=wallet_balance,
+            expected_wallet_balance=DEMO_INITIAL_WALLET_BALANCE,
             expected_duplicate_count=report.duplicate_transaction_id_count,
         )
 
@@ -205,7 +211,8 @@ def seed_database(source_path: Path | None = None) -> SeedSummary:
             demo_user_id=demo_user.id,
             transactions_inserted=report.normalized_records,
             rewards_inserted=len(REWARD_CATALOG),
-            wallet_balance=wallet_balance,
+            wallet_balance=DEMO_INITIAL_WALLET_BALANCE,
+            historical_eligible_coins=historical_eligible_coins,
             transactions_earning_coins=transactions_earning_coins,
             uncategorized_transaction_count=uncategorized_count,
             report=report,
@@ -234,8 +241,8 @@ def format_seed_summary(summary: SeedSummary) -> str:
             "",
             "Rewards:",
             f"Rewards inserted: {summary.rewards_inserted}",
-            f"Wallet balance: {summary.wallet_balance} coins",
-            f"Total coins earned before wallet creation: {summary.wallet_balance}",
+            f"Historical eligible coins: {summary.historical_eligible_coins}",
+            f"Demo available wallet balance: {summary.wallet_balance} coins",
             "",
             "Parser data quality:",
             format_report(summary.report),

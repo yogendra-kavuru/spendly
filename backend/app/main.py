@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from sqlalchemy import text
 
 from app.api.analytics import router as analytics_router
+from app.api.rewards import router as rewards_router
 from app.api.transactions import router as transactions_router
 from app.database import engine
 
@@ -12,6 +13,7 @@ app = FastAPI(
 
 app.include_router(transactions_router)
 app.include_router(analytics_router)
+app.include_router(rewards_router)
 
 
 @app.get("/health")

@@ -2,7 +2,11 @@ from decimal import Decimal
 
 import pytest
 
-from app.data.seed import calculate_transaction_coins
+from app.data.seed import DEMO_INITIAL_WALLET_BALANCE, calculate_transaction_coins
+
+
+def test_demo_initial_wallet_balance_is_controlled() -> None:
+    assert DEMO_INITIAL_WALLET_BALANCE == 1500
 
 
 @pytest.mark.parametrize(
