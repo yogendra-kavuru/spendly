@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, Coins, Gift, LockKeyhole, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { getRewards, redeemReward } from "@/lib/api";
 import { formatNumber } from "@/lib/format";
@@ -41,6 +41,7 @@ export function RewardsCatalog({
   const [selectedReward, setSelectedReward] = useState<Reward | null>(null);
   const [redemptionResult, setRedemptionResult] =
     useState<RewardRedemptionResponse | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const rewardsQuery = useQuery({ queryKey: ["rewards"], queryFn: getRewards });
   const redemptionMutation = useMutation({
     mutationFn: redeemReward,
@@ -56,6 +57,25 @@ export function RewardsCatalog({
   });
 
   const dialogOpen = selectedReward !== null || redemptionResult !== null;
+
+  useEffect(() => {
+    if (!dialogOpen) {
+      return;
+    }
+
+    const previouslyFocusedElement = document.activeElement;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = originalOverflow;
+      if (previouslyFocusedElement instanceof HTMLElement) {
+        previouslyFocusedElement.focus();
+      }
+    };
+  }, [dialogOpen]);
 
   useEffect(() => {
     if (!dialogOpen) {
@@ -162,6 +182,7 @@ export function RewardsCatalog({
             onMouseDown={(event) => event.stopPropagation()}
           >
             <button
+              ref={closeButtonRef}
               className={styles.closeButton}
               type="button"
               onClick={closeDialog}
@@ -178,7 +199,7 @@ export function RewardsCatalog({
                 <p>{redemptionResult.reward_name}</p>
                 <strong>{formatNumber(redemptionResult.coins_spent)} coins used</strong>
                 <span>{formatNumber(redemptionResult.balance)} coins remaining</span>
-                <button type="button" autoFocus onClick={closeDialog}>Done</button>
+                <button type="button" onClick={closeDialog}>Done</button>
               </div>
             ) : selectedReward ? (
               <>
@@ -201,7 +222,6 @@ export function RewardsCatalog({
                   <button
                     className={styles.confirmButton}
                     type="button"
-                    autoFocus
                     disabled={redemptionMutation.isPending}
                     onClick={() => redemptionMutation.mutate(selectedReward.id)}
                   >
