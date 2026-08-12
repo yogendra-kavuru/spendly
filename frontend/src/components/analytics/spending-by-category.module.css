@@ -1,0 +1,283 @@
+.card {
+  min-height: 380px;
+  padding: 26px;
+  border: 1px solid #e3e7ee;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(23, 32, 51, 0.04);
+}
+
+.header h2,
+.header p,
+.total strong,
+.total span,
+.message p,
+.emptyState h3,
+.emptyState p {
+  margin: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header h2 {
+  color: #172033;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+
+.header p {
+  margin-top: 5px;
+  color: #697386;
+  font-size: 13px;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+}
+
+.total strong {
+  color: #172033;
+  font-size: clamp(24px, 2.5vw, 31px);
+  letter-spacing: -0.04em;
+}
+
+.total span {
+  color: #697386;
+  font-size: 13px;
+}
+
+.analyticsBody,
+.loadingGrid {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.84fr) minmax(0, 1.16fr);
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.chartWrap {
+  min-width: 0;
+}
+
+.centerValue,
+.centerLabel {
+  fill: #172033;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.centerValue {
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.centerLabel {
+  fill: #697386;
+  font-size: 10px;
+}
+
+.breakdown {
+  display: flex;
+  max-height: 238px;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+
+.categoryRow {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #172033;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.categoryRow:hover {
+  background: #f5f7fb;
+}
+
+.categoryRow:focus-visible,
+.message button:focus-visible {
+  outline: 3px solid rgba(40, 84, 217, 0.24);
+  outline-offset: 2px;
+}
+
+.categoryName {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.colorDot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.categoryDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  color: #7b8495;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.categoryDetails strong {
+  margin-top: 2px;
+  color: #34405a;
+  font-size: 12px;
+}
+
+.tooltip {
+  display: flex;
+  min-width: 145px;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid #e2e7f0;
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 10px 22px rgba(23, 32, 51, 0.14);
+  color: #5e697c;
+  font-size: 12px;
+}
+
+.tooltip strong {
+  margin-bottom: 2px;
+  color: #172033;
+}
+
+.loadingBody,
+.message,
+.emptyState {
+  display: flex;
+  min-height: 274px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loadingBody {
+  align-items: stretch;
+  justify-content: flex-start;
+  padding-top: 28px;
+}
+
+.totalSkeleton,
+.donutSkeleton,
+.rowSkeletons span {
+  display: block;
+  border-radius: 8px;
+  background: #edf0f5;
+}
+
+.totalSkeleton {
+  width: 170px;
+  height: 34px;
+}
+
+.donutSkeleton {
+  width: 164px;
+  height: 164px;
+  justify-self: center;
+  border: 31px solid #edf0f5;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.rowSkeletons {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.rowSkeletons span {
+  width: 100%;
+  height: 30px;
+}
+
+.message,
+.emptyState {
+  gap: 9px;
+  color: #697386;
+  font-size: 14px;
+  text-align: center;
+}
+
+.message button {
+  padding: 8px 12px;
+  border: 1px solid #cbd5ef;
+  border-radius: 8px;
+  background: #fff;
+  color: #2854d9;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.emptyState h3 {
+  color: #34405a;
+  font-size: 16px;
+}
+
+.emptyState strong {
+  margin-top: 5px;
+  color: #172033;
+  font-size: 21px;
+}
+
+@media (max-width: 840px) {
+  .analyticsBody,
+  .loadingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .chartWrap {
+    max-width: 360px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  .breakdown {
+    max-height: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    padding: 21px;
+  }
+
+  .categoryRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3px;
+  }
+
+  .categoryDetails {
+    align-items: start;
+    padding-left: 15px;
+  }
+}

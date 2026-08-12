@@ -1,0 +1,335 @@
+.card {
+  min-height: 380px;
+  padding: 26px;
+  border: 1px solid #e3e7ee;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(23, 32, 51, 0.04);
+}
+
+.header,
+.rewardTitleRow,
+.availableBalance,
+.needCoins,
+.dialogActions {
+  display: flex;
+  align-items: center;
+}
+
+.header {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header h2,
+.header p,
+.rewardItem h3,
+.rewardItem p,
+.state h3,
+.state p,
+.dialog h3,
+.dialogEyebrow,
+.successState p,
+.successState strong,
+.successState span {
+  margin: 0;
+}
+
+.header h2 {
+  color: #172033;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+
+.header p {
+  margin-top: 5px;
+  color: #697386;
+  font-size: 13px;
+}
+
+.availableBalance {
+  gap: 5px;
+  color: #2854d9;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.rewardList {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+}
+
+.rewardItem {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 14px 0;
+  border-top: 1px solid #edf0f4;
+}
+
+.rewardTitleRow {
+  gap: 7px;
+  color: #2854d9;
+}
+
+.rewardItem h3 {
+  color: #263149;
+  font-size: 14px;
+  letter-spacing: -0.015em;
+}
+
+.rewardItem p {
+  display: -webkit-box;
+  margin-top: 6px;
+  overflow: hidden;
+  color: #697386;
+  font-size: 12px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.rewardType {
+  display: inline-block;
+  margin-top: 7px;
+  color: #778198;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.07em;
+}
+
+.rewardAction {
+  display: flex;
+  min-width: 108px;
+  align-items: end;
+  flex-direction: column;
+  gap: 7px;
+  color: #34405a;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.rewardAction > button,
+.dialogActions button,
+.successState button,
+.state button {
+  min-height: 32px;
+  padding: 7px 10px;
+  border: 1px solid #2854d9;
+  border-radius: 8px;
+  background: #2854d9;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rewardAction > button:disabled {
+  cursor: not-allowed;
+  border-color: #d9dee8;
+  background: #eef1f5;
+  color: #7a8495;
+}
+
+.needCoins {
+  gap: 4px;
+  color: #7b5265;
+  font-size: 10px;
+}
+
+.state,
+.skeletonList {
+  display: flex;
+  min-height: 270px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 9px;
+  color: #697386;
+  font-size: 14px;
+  text-align: center;
+}
+
+.state h3 {
+  color: #34405a;
+  font-size: 16px;
+}
+
+.state button {
+  border-color: #cbd5ef;
+  background: #fff;
+  color: #2854d9;
+}
+
+.skeletonList {
+  align-items: stretch;
+  justify-content: flex-start;
+  padding-top: 19px;
+}
+
+.skeletonList span {
+  display: block;
+  height: 73px;
+  border-radius: 10px;
+  background: #edf0f5;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(17, 24, 39, 0.46);
+}
+
+.dialog {
+  position: relative;
+  width: min(100%, 410px);
+  padding: 28px;
+  border: 1px solid #e2e7f0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(16, 24, 40, 0.28);
+}
+
+.closeButton {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #697386;
+  cursor: pointer;
+}
+
+.dialogEyebrow {
+  margin-bottom: 8px;
+  color: #52607a;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dialog h3 {
+  max-width: 320px;
+  color: #172033;
+  font-size: 21px;
+  letter-spacing: -0.035em;
+}
+
+.costSummary {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f5f7fb;
+}
+
+.costSummary span {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: #697386;
+  font-size: 13px;
+}
+
+.costSummary strong {
+  color: #34405a;
+}
+
+.dialogActions {
+  justify-content: end;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.dialogActions button:first-child {
+  border-color: #dce1ea;
+  background: #fff;
+  color: #465169;
+}
+
+.dialogActions button:disabled,
+.closeButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.dialogError {
+  margin: 14px 0 0;
+  color: #b42318;
+  font-size: 13px;
+}
+
+.successState {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  color: #2854d9;
+  text-align: center;
+}
+
+.successState h3 {
+  margin-top: 4px;
+}
+
+.successState p,
+.successState span {
+  color: #697386;
+  font-size: 14px;
+}
+
+.successState strong {
+  color: #172033;
+  font-size: 15px;
+}
+
+.successState button {
+  margin-top: 10px;
+}
+
+.rewardAction > button:focus-visible,
+.state button:focus-visible,
+.closeButton:focus-visible,
+.dialogActions button:focus-visible,
+.successState button:focus-visible {
+  outline: 3px solid rgba(40, 84, 217, 0.24);
+  outline-offset: 2px;
+}
+
+@media (max-width: 420px) {
+  .card,
+  .dialog {
+    padding: 21px;
+  }
+
+  .rewardItem {
+    grid-template-columns: 1fr;
+  }
+
+  .rewardAction {
+    align-items: start;
+  }
+
+  .dialogActions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .dialogActions button {
+    width: 100%;
+  }
+}
