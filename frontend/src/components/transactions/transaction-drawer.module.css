@@ -1,0 +1,14 @@
+.backdrop { position:fixed; inset:0; z-index:50; display:flex; justify-content:flex-end; background:rgba(20,29,45,.38); animation:fadeIn .18s ease-out both; }
+.drawer { width:min(440px,100%); height:100%; overflow-y:auto; border-left:1px solid #dce1ea; background:#fff; box-shadow:-14px 0 40px rgba(23,32,51,.16); animation:slideIn .22s ease-out both; }
+.header { display:flex; position:sticky; top:0; z-index:1; align-items:center; justify-content:space-between; padding:22px 24px; border-bottom:1px solid #e8ebf0; background:#fff; }
+.header h2 { margin:0; color:#172033; font-size:18px; letter-spacing:-.025em; }
+.header button { display:grid; width:36px; height:36px; place-items:center; border:1px solid #dce1ea; border-radius:8px; background:#fff; color:#465169; cursor:pointer; }
+.header button:hover { background:#f5f7fa; }.header button:focus-visible { border-color:#2854d9; outline:3px solid rgba(40,84,217,.14); outline-offset:2px; }
+.content { padding:26px 24px 36px; }
+.summary { padding-bottom:24px; border-bottom:1px solid #e8ebf0; }.merchant { margin:0; overflow-wrap:anywhere; color:#172033; font-size:24px; font-weight:750; letter-spacing:-.04em; }.amount { margin:10px 0 14px; color:#2854d9; font-size:22px; font-weight:750; letter-spacing:-.03em; }
+.status { display:inline-block; padding:5px 8px; border-radius:999px; font-size:11px; font-weight:750; letter-spacing:.04em; }.success { background:#e8f7f0; color:#197255; }.failed { background:#faebeb; color:#aa3a3a; }.pending { background:#fff3df; color:#9b661a; }
+.details { display:grid; gap:0; margin:22px 0 0; }.details div { display:grid; grid-template-columns:minmax(110px,.7fr) minmax(0,1.3fr); gap:18px; padding:15px 0; border-bottom:1px solid #edf0f4; }.details dt { color:#697386; font-size:12px; font-weight:700; }.details dd { min-width:0; margin:0; overflow-wrap:anywhere; color:#263149; font-size:14px; font-weight:650; text-align:right; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideIn { from { transform:translateX(100%); } to { transform:translateX(0); } }
+@media (max-width:480px) { .drawer { width:100%; }.header { padding:18px 20px; }.content { padding:22px 20px 30px; }.details div { grid-template-columns:1fr; gap:5px; }.details dd { text-align:left; } }
+@media (prefers-reduced-motion:reduce) { .backdrop,.drawer { animation:none; } }

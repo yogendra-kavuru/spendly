@@ -2,7 +2,7 @@
 
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUp, Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { getTransactionMetadata, getTransactions } from "@/lib/api";
 import {
@@ -11,7 +11,8 @@ import {
   getMonthDateRange,
   isValidMonthValue,
 } from "@/lib/format";
-import type { SortOrder, TransactionQueryParams, TransactionSortBy, TransactionStatus } from "@/lib/types";
+import type { SortOrder, Transaction, TransactionQueryParams, TransactionSortBy, TransactionStatus } from "@/lib/types";
+import { TransactionDrawer } from "./transaction-drawer";
 import styles from "./transaction-section.module.css";
 
 type TransactionSectionProps = {
@@ -62,6 +63,8 @@ export function TransactionSection({
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+  const closeDrawer = useCallback(() => setSelectedTransaction(null), []);
   const debouncedSearch = useDebouncedValue(searchInput, 300).trim();
   const validDateRange = !dateFrom || !dateTo || dateFrom <= dateTo;
   const validAmountRange = isValidAmountRange(amountMin, amountMax);
@@ -190,7 +193,11 @@ export function TransactionSection({
               <tr><td className={styles.stateCell} colSpan={6}><strong>No transactions found</strong><span>Try adjusting your filters.</span></td></tr>
             ) : transactions?.items.map((transaction) => (
               <tr key={transaction.id}>
-                <td className={styles.merchant}>{transaction.merchant}</td>
+                <td className={styles.merchant}>
+                  <button type="button" onClick={() => setSelectedTransaction(transaction)}>
+                    {transaction.merchant}
+                  </button>
+                </td>
                 <td className={styles.optionalColumn}>{transaction.category}</td>
                 <td>{formatTransactionDate(transaction.transaction_at)}</td>
                 <td className={styles.optionalColumn}>{transaction.payment_method}</td>
@@ -211,6 +218,7 @@ export function TransactionSection({
           <button type="button" disabled={!transactions || page >= transactions.total_pages} onClick={() => setPage((current) => current + 1)}>Next</button>
         </div>
       </footer>
+      <TransactionDrawer transaction={selectedTransaction} onClose={closeDrawer} />
     </section>
   );
 }

@@ -22,7 +22,7 @@
 .tableWrap th button { display:inline-flex; align-items:center; gap:3px; border:0; background:transparent; color:inherit; font:inherit; font-weight:750; letter-spacing:inherit; cursor:pointer; text-transform:inherit; }
 .tableWrap td { max-width:190px; padding:14px 10px; border-bottom:1px solid #edf0f4; color:#536075; vertical-align:middle; white-space:nowrap; }
 .tableWrap tbody tr:hover { background:#f8faff; }
-.merchant { overflow:hidden; color:#263149 !important; font-weight:700; text-overflow:ellipsis; }
+.merchant { overflow:hidden; color:#263149 !important; font-weight:700; text-overflow:ellipsis; }.merchant button { max-width:100%; overflow:hidden; border:0; background:transparent; color:inherit; font:inherit; font-weight:inherit; text-align:left; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; }.merchant button:hover { color:#2854d9; text-decoration:underline; }.merchant button:focus-visible { border-radius:3px; outline:3px solid rgba(40,84,217,.2); outline-offset:2px; }
 .amount,.amountHeader { text-align:right !important; }.amountHeader button { justify-content:flex-end; }.amount { color:#263149 !important; font-weight:700; }
 .status { display:inline-block; padding:4px 7px; border-radius:999px; font-size:10px; font-weight:750; letter-spacing:.04em; }.success { background:#e8f7f0; color:#197255; }.failed { background:#faebeb; color:#aa3a3a; }.pending { background:#fff3df; color:#9b661a; }
 .stateCell { padding:38px !important; color:#697386 !important; text-align:center; white-space:normal !important; }.stateCell strong,.stateCell span { display:block; }.stateCell span { margin-top:5px; }.stateCell button { margin-top:10px; }

@@ -59,3 +59,12 @@ export function formatTransactionDate(timestamp: string): string {
     timeZone: "Asia/Kolkata",
   }).format(new Date(timestamp));
 }
+
+export function formatTransactionTime(timestamp: string): string {
+  return new Intl.DateTimeFormat("en-IN", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata",
+  }).format(new Date(timestamp));
+}
