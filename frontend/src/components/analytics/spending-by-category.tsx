@@ -5,6 +5,7 @@ import {
   Cell,
   Pie,
   PieChart,
+  type PieSectorDataItem,
   ResponsiveContainer,
   Tooltip,
   type TooltipContentProps,
@@ -142,6 +143,11 @@ export function SpendingByCategory({
                     outerRadius={96}
                     paddingAngle={2}
                     stroke="none"
+                    cursor={onCategorySelect ? "pointer" : undefined}
+                    onClick={(datum: PieSectorDataItem) => {
+                      const chartDatum = datum.payload as ChartDatum;
+                      onCategorySelect?.(chartDatum.category);
+                    }}
                   >
                     {chartData.map((item) => (
                       <Cell key={item.category} fill={item.color} />
